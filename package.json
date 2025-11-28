@@ -1,0 +1,16 @@
+{
+  "name": "qinkun-demo",
+  "version": "1.0.0",
+  "description": "乾坤微前端示例项目",
+  "main": "start-all.js",
+  "scripts": {
+    "start": "node start-all.js",
+    "install-all": "npm install && cd main-app && npm install && cd ../sub-app1 && npm install && cd ../sub-app2 && npm install && cd ../sub-app3 && npm install"
+  },
+  "keywords": [
+    "qiankun",
+    "microfrontend"
+  ],
+  "author": "",
+  "license": "ISC"
+}
