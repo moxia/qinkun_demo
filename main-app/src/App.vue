@@ -6,7 +6,10 @@
         <router-link to="/">首页</router-link> |
         <router-link to="/sub-app1">子应用1</router-link> |
         <router-link to="/sub-app2">子应用2</router-link> |
-        <router-link to="/sub-app3">子应用3 (Vue3)</router-link>
+        <router-link to="/sub-app3">子应用3</router-link> |
+        <router-link to="/sub-app4">子应用4</router-link> |
+        <router-link to="/sub-app5">子应用5(React)</router-link> |
+        <router-link to="/sub-app6">子应用6(Angular)</router-link>
       </div>
       <!-- 主应用路由出口 -->
       <router-view></router-view>
@@ -54,4 +57,6 @@ export default {
   color: #42b983;
 }
 </style>
+
+
 

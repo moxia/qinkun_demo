@@ -7,6 +7,9 @@ const mainAppPath = path.join(__dirname, 'main-app');
 const subApp1Path = path.join(__dirname, 'sub-app1');
 const subApp2Path = path.join(__dirname, 'sub-app2');
 const subApp3Path = path.join(__dirname, 'sub-app3');
+const subApp4Path = path.join(__dirname, 'sub-app4');
+const subApp5Path = path.join(__dirname, 'sub-app5');
+const subApp6Path = path.join(__dirname, 'sub-app6');
 
 // 定义颜色
 const colors = {
@@ -14,15 +17,21 @@ const colors = {
   sub1: '\x1b[32m', // 绿色
   sub2: '\x1b[35m', // 紫色
   sub3: '\x1b[33m', // 黄色
+  sub4: '\x1b[34m', // 蓝色
+  sub5: '\x1b[91m', // 亮红色
+  sub6: '\x1b[92m', // 亮绿色
   reset: '\x1b[0m'  // 重置
 };
 
 // 启动应用函数
-function startApp(appPath, name, color) {
+function startApp(appPath, name, color, command = 'serve', env = {}) {
   console.log(`${color}[${name}] 正在启动...${colors.reset}`);
   
   const npm = process.platform === 'win32' ? 'npm.cmd' : 'npm';
-  const child = spawn(npm, ['run', 'serve'], { cwd: appPath });
+  const child = spawn(npm, ['run', command], { 
+    cwd: appPath,
+    env: { ...process.env, ...env }
+  });
   
   child.stdout.on('data', (data) => {
     console.log(`${color}[${name}] ${data.toString().trim()}${colors.reset}`);
@@ -45,6 +54,9 @@ console.log('正在启动所有应用...');
 const subApp1 = startApp(subApp1Path, 'sub-app1', colors.sub1);
 const subApp2 = startApp(subApp2Path, 'sub-app2', colors.sub2);
 const subApp3 = startApp(subApp3Path, 'sub-app3', colors.sub3);
+const subApp4 = startApp(subApp4Path, 'sub-app4', colors.sub4, 'start');
+const subApp5 = startApp(subApp5Path, 'sub-app5', colors.sub5, 'serve', { PORT: '8085', BROWSER: 'none' });
+const subApp6 = startApp(subApp6Path, 'sub-app6', colors.sub6, 'start');
 
 // 等待一段时间后启动主应用，确保子应用已经启动
 setTimeout(() => {
@@ -57,8 +69,13 @@ setTimeout(() => {
     subApp1.kill();
     subApp2.kill();
     subApp3.kill();
+    subApp4.kill();
+    subApp5.kill();
+    subApp6.kill();
     process.exit(0);
   });
 }, 3000); // 等待3秒后启动主应用
 
 console.log('\n按 Ctrl+C 可以同时停止所有应用\n');
+
+

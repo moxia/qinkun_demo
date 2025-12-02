@@ -16,9 +16,27 @@ registerMicroApps([
   },
   {
     name: 'sub-app3',
-    entry: '//localhost:8085',
+    entry: '//localhost:8083',
     container: '#subapp-container',
     activeRule: '/sub-app3',
+  },
+  {
+    name: 'sub-app4',
+    entry: '//localhost:8084',
+    container: '#subapp-container',
+    activeRule: '/sub-app4',
+  },
+  {
+    name: 'sub-app5',
+    entry: '//localhost:8085',
+    container: '#subapp-container',
+    activeRule: '/sub-app5',
+  },
+  {
+    name: 'sub-app6',
+    entry: '//localhost:8087',
+    container: '#subapp-container',
+    activeRule: '/sub-app6',
   },
 ]);
 

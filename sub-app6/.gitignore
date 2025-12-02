@@ -1,0 +1,14 @@
+# dependencies
+node_modules/
+
+# production
+dist/
+
+# local env files
+.env.local
+.env.*.local
+
+# IDE
+.idea/
+.vscode/
+
