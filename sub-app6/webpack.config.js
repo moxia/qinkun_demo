@@ -7,15 +7,14 @@ module.exports = {
   output: {
     filename: 'bundle.js',
     path: path.resolve(__dirname, 'dist'),
-    // qiankun 需要直接访问导出的生命周期函数
-    library: 'subApp6Angular',
-    libraryTarget: 'umd',
+    library: 'sub-app6',
+    libraryTarget: 'window',
     globalObject: 'window',
     publicPath: 'auto',
     umdNamedDefine: true
   },
   devServer: {
-    port: 8087,
+    port: 8086,
     historyApiFallback: true,
     headers: {
       'Access-Control-Allow-Origin': '*',
@@ -29,7 +28,7 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.ts$/,
+        test: /\.(ts|tsx)$/,
         use: 'ts-loader',
         exclude: /node_modules/
       },

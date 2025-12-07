@@ -1,58 +1,41 @@
 import 'zone.js';
+import './public-path';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { AppModule } from './app/app.module';
 
-// 乾坤微应用生命周期
 declare const window: any;
 
 let app: any = null;
 
-// 启动函数
-export async function bootstrap() {
-  console.log('Angular app bootstraped');
-}
+export async function bootstrap() {}
 
-// 挂载函数
 export async function mount(props: any) {
-  console.log('Angular app mount', props);
+  console.log('[sub-app6] mount props', props);
   const { container } = props;
-  
-  // 在 qiankun 容器中创建 Angular 应用的挂载点
-  container.innerHTML = '<app-root></app-root>';
-  
-  // 设置 base href 为子应用的路由 - 只在独立运行时设置
-  if (!window.__POWERED_BY_QIANKUN__) {
-    const baseElement = document.createElement('base');
-    baseElement.href = '/';
-    document.head.appendChild(baseElement);
+  const mountEl = document.createElement('div');
+  mountEl.id = 'app6-root';
+  mountEl.innerHTML = '<app-root></app-root>';
+  if (container) container.appendChild(mountEl);
+  try {
+    app = await platformBrowserDynamic([{ provide: 'qiankunProps', useValue: props }]).bootstrapModule(AppModule);
+    console.log('[sub-app6] mounted');
+  } catch (e) {
+    console.error('[sub-app6] mount error', e);
+    throw e;
   }
-  
-  app = await platformBrowserDynamic([
-    { provide: 'qiankunProps', useValue: props }
-  ]).bootstrapModule(AppModule);
 }
 
-// 卸载函数
 export async function unmount(props: any) {
-  console.log('Angular app unmount', props);
-  if (app) {
-    app.destroy();
-    app = null;
-  }
+  console.log('[sub-app6] unmount');
+  if (app) { app.destroy(); app = null; }
+  const el = document.getElementById('app6-root');
+  if (el && el.parentNode) el.parentNode.removeChild(el);
 }
 
-// 如果不是被乾坤加载，独立运行
 if (!window.__POWERED_BY_QIANKUN__) {
-  platformBrowserDynamic().bootstrapModule(AppModule)
-    .catch(err => console.error(err));
+  platformBrowserDynamic().bootstrapModule(AppModule).catch(err => console.error(err));
 }
 
-// 确保生命周期函数在全局范围内可用
 if (window.__POWERED_BY_QIANKUN__) {
-  window['subApp6Angular'] = {
-    bootstrap,
-    mount,
-    unmount
-  };
+  window['sub-app6'] = { bootstrap, mount, unmount };
 }
-

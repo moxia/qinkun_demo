@@ -1,4 +1,4 @@
-import { registerMicroApps, start } from 'qiankun';
+import { registerMicroApps, start, addGlobalUncaughtErrorHandler } from 'qiankun';
 
 // 注册子应用
 registerMicroApps([
@@ -34,11 +34,25 @@ registerMicroApps([
   },
   {
     name: 'sub-app6',
-    entry: '//localhost:8087',
+    entry: '//localhost:8086',
     container: '#subapp-container',
     activeRule: '/sub-app6',
   },
-]);
+], {
+  beforeLoad: app => console.log('[beforeLoad]', app.name),
+  beforeMount: app => console.log('[beforeMount]', app.name),
+  afterMount: app => console.log('[afterMount]', app.name),
+  beforeUnmount: app => console.log('[beforeUnmount]', app.name),
+  afterUnmount: app => console.log('[afterUnmount]', app.name)
+});
 
-// 启动 qiankun
-start();
+addGlobalUncaughtErrorHandler((event) => {
+  console.error(event);
+});
+
+start({
+  singular: true,
+  prefetch: false,
+  jsSandbox: false,
+  sandbox: false
+});
